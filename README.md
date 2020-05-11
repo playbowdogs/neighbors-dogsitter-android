@@ -1,2 +1,2 @@
-# neighbors-android
-PlayBow Neighbors Android Repo
+# neighbors-dogsitter-android
+PlayBow Neighbors DogSitter Android Repo
