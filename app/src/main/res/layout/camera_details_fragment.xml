@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" >
+    <data>
+        <variable
+            name="model"
+            type="com.playbowdogs.neighbors_dogsitter_android.data.model.AccountCamerasModel.Result" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/detail_cam_fragment_imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:transitionName="cameraImage"
+            app:CamImage="@{model.snapshot.url}"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <VideoView
+            android:id="@+id/detail_cam_fragment_videoView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/camera_details_fragment_start_broadcast"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toStartOf="@id/camera_details_fragment_record_start"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_cam_fragment_videoView"
+            app:srcCompat="@drawable/ic_videocam" />
+
+        <ImageView
+            android:id="@+id/camera_details_fragment_broadcast_stop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/camera_details_fragment_record_start"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/detail_cam_fragment_videoView"
+            app:srcCompat="@drawable/ic_videocam_off" />
+
+        <ImageView
+            android:id="@+id/camera_details_fragment_record_start"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/camera_details_fragment_start_broadcast"
+            app:layout_constraintTop_toBottomOf="@id/detail_cam_fragment_videoView"
+            app:srcCompat="@drawable/ic_manual_record" />
+
+        <ImageView
+            android:id="@+id/camera_details_fragment_record_stop"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/camera_details_fragment_start_broadcast"
+            app:layout_constraintTop_toBottomOf="@id/detail_cam_fragment_videoView"
+            app:srcCompat="@drawable/ic_stop" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
