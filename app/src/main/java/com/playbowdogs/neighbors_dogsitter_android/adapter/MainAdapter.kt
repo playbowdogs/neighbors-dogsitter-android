@@ -14,7 +14,9 @@ import com.playbowdogs.neighbors_dogsitter_android.utils.GlideApp
 import kotlinx.android.synthetic.main.recycler_view_cameras.view.*
 
 class MainAdapter(
-    private val results: ArrayList<AccountCamerasModel.Result>, private val sharedViewModel: SharedViewModel) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
+    private val results: ArrayList<AccountCamerasModel.Result>,
+    private val sharedViewModel: SharedViewModel
+) : RecyclerView.Adapter<MainAdapter.DataViewHolder>() {
 
     class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -24,7 +26,6 @@ class MainAdapter(
                 transitionName = result.snapshot.url
                 recycler_view_cameras_text.text = result.name
                 recycler_view_status_text.text = result.status
-//                recycler_view_card_view.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_mainFragment_to_cameraDetails))
                 recycler_view_card_view.setOnClickListener {
                     val extras = FragmentNavigatorExtras(
                         recycler_view_cameras_image_view to "cameraImage")
