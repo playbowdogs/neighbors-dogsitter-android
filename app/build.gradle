@@ -71,6 +71,7 @@ dependencies {
     implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
     implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
+
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
