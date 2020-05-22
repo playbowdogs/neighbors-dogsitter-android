@@ -1,4 +1,4 @@
-package com.playbowdogs.neighbors_dogsitter_android.ui.main
+package com.playbowdogs.neighbors_dogsitter_android.ui.cameraList
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,64 +8,70 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.playbowdogs.neighbors_dogsitter_android.adapter.MainAdapter
+import com.playbowdogs.neighbors_dogsitter_android.R
+import com.playbowdogs.neighbors_dogsitter_android.adapter.CameraListAdapter
 import com.playbowdogs.neighbors_dogsitter_android.data.model.AccountCamerasModel
-import com.playbowdogs.neighbors_dogsitter_android.databinding.MainFragmentBinding
-import com.playbowdogs.neighbors_dogsitter_android.ui.SharedViewModel
+import com.playbowdogs.neighbors_dogsitter_android.data.model.ChosenCamera
+import com.playbowdogs.neighbors_dogsitter_android.databinding.CameraListFragmentBinding
 import com.playbowdogs.neighbors_dogsitter_android.utils.Status.*
 
 
-class MainFragment : Fragment() {
-    private lateinit var mBinding: MainFragmentBinding
-    private lateinit var adapter: MainAdapter
+class CameraListFragment : Fragment() {
+    private lateinit var mBinding: CameraListFragmentBinding
+    private lateinit var adapter: CameraListAdapter
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
-    private lateinit var mainViewModel: MainViewModel
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var cameraListViewModel: CameraListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = MainFragmentBinding.inflate(inflater, container, false)
+        mBinding = CameraListFragmentBinding.inflate(inflater, container, false)
         return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
+        setupViewModel()
         setupUI()
         setupObservers()
     }
 
+    private fun setupViewModel() {
+        cameraListViewModel = ViewModelProvider(this).get(CameraListViewModel::class.java)
+    }
+
     private fun setupUI() {
         mBinding.mainFragmentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        adapter = MainAdapter(arrayListOf(), sharedViewModel)
+        adapter = CameraListAdapter(arrayListOf())
         mBinding.mainFragmentRecyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
         mBinding.mainFragmentSwipeRefreshLayout.setOnRefreshListener {
-            sharedViewModel.getCameras()
+            cameraListViewModel.getCamerasList()
             mBinding.mainFragmentSwipeRefreshLayout.isRefreshing = false
         }
 
-//        mBinding.mainFragmentRecyclerView.setOnClickListener(Navigation.createNavigateOnClickListener(
-//            R.id.action_mainFragment_to_cameraDetails
-//        ))
-
-        sharedViewModel.getCameras().observe(requireActivity(), Observer {
+         cameraListViewModel.getCamerasList().observe(requireActivity(), Observer {
             it?.let { resource ->
                 when (resource.status) {
                     SUCCESS -> {
                         mBinding.mainFragmentRecyclerView.visibility = View.VISIBLE
                         mBinding.progressView.visibility = View.GONE
-                        resource.data?.let { accountCameras -> retrieveList(accountCameras.results) }
+                        resource.data?.let { accountCameras ->
+                            if (accountCameras.results.size == 1) {
+                                ChosenCamera(accountCameras.results[0])
+                                findNavController().navigate(
+                                    R.id.action_mainFragment_to_cameraDetails_true
+                                )
+                            } else {
+                                retrieveList(accountCameras.results)
+                            }
+                        }
                     }
                     ERROR -> {
                         mBinding.mainFragmentRecyclerView.visibility = View.VISIBLE
@@ -87,5 +93,4 @@ class MainFragment : Fragment() {
             notifyDataSetChanged()
         }
     }
-
 }

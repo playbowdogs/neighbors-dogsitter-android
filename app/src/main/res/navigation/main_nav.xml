@@ -10,9 +10,26 @@
         android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraList.CameraListFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_cameraDetails"
+            android:id="@+id/action_mainFragment_to_cameraDetails_true"
             app:destination="@id/cameraDetails"
-            app:launchSingleTop="true" />
+            app:launchSingleTop="true" >
+            <argument
+                android:name="isSingleCam"
+                android:defaultValue="true" />
+        </action>
+        <action
+            android:id="@+id/action_mainFragment_to_cameraDetails_false"
+            app:destination="@id/cameraDetails"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/mainFragment"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:launchSingleTop="true" >
+            <argument
+                android:name="isSingleCam"
+                android:defaultValue="false" />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/cameraDetails"
@@ -28,6 +45,19 @@
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
             app:launchSingleTop="true" />
+        <argument
+            android:name="isSingleCam"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <action
+            android:id="@+id/action_cameraDetails_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/cameraDetails"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/recordedClipDetailFragment"
