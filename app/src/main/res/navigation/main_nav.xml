@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.main.MainFragment"
+        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraList.CameraListFragment"
         android:label="MainFragment" >
         <action
             android:id="@+id/action_mainFragment_to_cameraDetails"
@@ -18,5 +18,34 @@
         android:id="@+id/cameraDetails"
         android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraDetails.CameraDetails"
         android:label="camera_details_fragment"
-        tools:layout="@layout/camera_details_fragment" />
+        tools:layout="@layout/camera_details_fragment" >
+        <action
+            android:id="@+id/action_cameraDetails_to_recordedClipsListFragment"
+            app:destination="@id/recordedClipsListFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/cameraDetails"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:launchSingleTop="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordedClipDetailFragment"
+        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.recordedClipDetail.RecordedClipDetailFragment"
+        android:label="fragment_recorded_clip_detail"
+        tools:layout="@layout/fragment_recorded_clip_detail" />
+    <fragment
+        android:id="@+id/recordedClipsListFragment"
+        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.recordedClipsList.RecordedClipsListFragment"
+        android:label="RecordedClipsListFragment" >
+        <action
+            android:id="@+id/action_recordedClipsListFragment_to_recordedClipDetailFragment"
+            app:destination="@id/recordedClipDetailFragment"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit"
+            app:popUpTo="@id/recordedClipsListFragment"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit"
+            app:launchSingleTop="true" />
+    </fragment>
 </navigation>
