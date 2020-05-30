@@ -1,4 +1,4 @@
-package com.playbowdogs.neighbors_dogsitter_android.adapter
+package com.playbowdogs.neighbors_dogsitter_android.data.adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
