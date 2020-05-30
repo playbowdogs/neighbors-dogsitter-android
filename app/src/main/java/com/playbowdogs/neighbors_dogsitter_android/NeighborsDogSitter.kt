@@ -1,8 +1,7 @@
 package com.playbowdogs.neighbors_dogsitter_android
 
 import android.app.Application
-import com.playbowdogs.neighbors_dogsitter_android.di.appModule
-import com.playbowdogs.neighbors_dogsitter_android.di.networkModule
+import com.playbowdogs.neighbors_dogsitter_android.di.*
 import com.playbowdogs.neighbors_dogsitter_android.utils.DefaultCurrentActivityListener
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
@@ -16,7 +15,14 @@ class NeighborsDogSitter : Application() {
         startKoin {
             androidLogger()
             androidContext(this@NeighborsDogSitter)
-            modules(listOf(networkModule, appModule))
+            modules(listOf(
+                appModule,
+                cameraDetailsModule,
+                cameraListModule,
+                loginModule,
+                networkModule,
+                recordedClipsListModule
+            ))
         }
         registerActivityLifecycleCallbacks(defaultCurrentActivityListener)
     }

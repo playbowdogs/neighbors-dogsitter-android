@@ -4,17 +4,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Headers
-import com.playbowdogs.neighbors_dogsitter_android.data.api.ApiService
 import com.playbowdogs.neighbors_dogsitter_android.data.model.AccountCamerasModel
 import com.playbowdogs.neighbors_dogsitter_android.data.model.ChosenCamera
 import com.playbowdogs.neighbors_dogsitter_android.data.model.GetRecordingInfoModel
+import com.playbowdogs.neighbors_dogsitter_android.data.repository.CameraDetailsRepository
 import com.playbowdogs.neighbors_dogsitter_android.utils.Resource
 import kotlinx.coroutines.*
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
-class CameraDetailsViewModel : ViewModel(), KoinComponent {
-    private val apiService: ApiService by inject()
+class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewModel() {
 
     val cameraStatus = MutableLiveData<Resource<AccountCamerasModel.Result>>()
     val cameraRecordingInfo = MutableLiveData<Resource<GetRecordingInfoModel>>()
@@ -29,7 +26,7 @@ class CameraDetailsViewModel : ViewModel(), KoinComponent {
         cameraStatus.postValue(Resource.loading(data = null))
         try {
             cameraStatus.postValue(
-                Resource.success(data = apiService.getCameraStatus(
+                Resource.success(data = repo.getCameraStatus(
                 "PersonalAccessToken afec708ac67fbccaa1a9b1c3ec3c31a34d740879",
                 ChosenCamera.value?.id.toString())))
         } catch (exception: Exception) {
@@ -41,7 +38,7 @@ class CameraDetailsViewModel : ViewModel(), KoinComponent {
         cameraRecordingInfo.postValue(Resource.loading(data = null))
         try {
             cameraRecordingInfo.postValue(
-                Resource.success(data = apiService.getRecordingInfo(
+                Resource.success(data = repo.getRecordingInfo(
                 "PersonalAccessToken afec708ac67fbccaa1a9b1c3ec3c31a34d740879",
                 ChosenCamera.value?.id.toString())))
         } catch (exception: Exception) {

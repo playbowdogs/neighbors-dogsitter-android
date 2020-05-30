@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.playbowdogs.neighbors_dogsitter_android.databinding.LoginFragmentBinding
+import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
+    private val viewModel: LoginViewModel by inject()
 
-    private lateinit var viewModel: LoginViewModel
     private lateinit var mBinding: LoginFragmentBinding
 
     override fun onCreateView(
@@ -26,7 +26,6 @@ class LoginFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
         mBinding.viewModel = viewModel
 
         setObservers()

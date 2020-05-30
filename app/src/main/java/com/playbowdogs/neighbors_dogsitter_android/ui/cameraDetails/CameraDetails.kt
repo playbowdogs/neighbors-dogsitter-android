@@ -10,7 +10,6 @@ import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import androidx.transition.TransitionInflater
@@ -21,12 +20,14 @@ import com.playbowdogs.neighbors_dogsitter_android.data.model.GetRecordingInfoMo
 import com.playbowdogs.neighbors_dogsitter_android.databinding.CameraDetailsFragmentBinding
 import com.playbowdogs.neighbors_dogsitter_android.utils.Resource
 import com.playbowdogs.neighbors_dogsitter_android.utils.Status
+import org.koin.android.ext.android.inject
 
 class CameraDetails : Fragment() {
-    private lateinit var viewModel: CameraDetailsViewModel
+    private val viewModel: CameraDetailsViewModel by inject()
+
     private lateinit var mBinding: CameraDetailsFragmentBinding
     private val chosenCamera = ChosenCamera.value
-    val args: CameraDetailsArgs by navArgs()
+    private val args: CameraDetailsArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +44,6 @@ class CameraDetails : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         setOnBackPressedCallback()
-        setViewModels()
         setObservers()
         setOnClickListeners()
         mBinding.model = chosenCamera
@@ -57,10 +57,6 @@ class CameraDetails : Fragment() {
             }
             callback.isEnabled = true
         }
-    }
-
-    private fun setViewModels() {
-        viewModel = ViewModelProvider(this).get(CameraDetailsViewModel::class.java)
     }
 
     private fun setObservers() {

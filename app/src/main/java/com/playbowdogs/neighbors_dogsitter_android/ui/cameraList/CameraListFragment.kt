@@ -7,22 +7,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.playbowdogs.neighbors_dogsitter_android.R
-import com.playbowdogs.neighbors_dogsitter_android.adapter.CameraListAdapter
+import com.playbowdogs.neighbors_dogsitter_android.data.adapter.CameraListAdapter
 import com.playbowdogs.neighbors_dogsitter_android.data.model.AccountCamerasModel
 import com.playbowdogs.neighbors_dogsitter_android.data.model.ChosenCamera
 import com.playbowdogs.neighbors_dogsitter_android.databinding.CameraListFragmentBinding
 import com.playbowdogs.neighbors_dogsitter_android.utils.Status.*
+import org.koin.android.ext.android.inject
 
 
 class CameraListFragment : Fragment() {
+    private val cameraListViewModel : CameraListViewModel by inject()
+
     private lateinit var mBinding: CameraListFragmentBinding
     private lateinit var adapter: CameraListAdapter
-
-    private lateinit var cameraListViewModel: CameraListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +35,8 @@ class CameraListFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        setupViewModel()
         setupUI()
         setupObservers()
-    }
-
-    private fun setupViewModel() {
-        cameraListViewModel = ViewModelProvider(this).get(CameraListViewModel::class.java)
     }
 
     private fun setupUI() {
@@ -66,8 +61,7 @@ class CameraListFragment : Fragment() {
                             if (accountCameras.results.size == 1) {
                                 ChosenCamera(accountCameras.results[0])
                                 findNavController().navigate(
-                                    R.id.action_mainFragment_to_cameraDetails_true
-                                )
+                                    R.id.action_mainFragment_to_cameraDetails_true)
                             } else {
                                 retrieveList(accountCameras.results)
                             }
