@@ -17,10 +17,11 @@ class NeighborsDogSitter : Application() {
             androidContext(this@NeighborsDogSitter)
             modules(listOf(
                 appModule,
+                networkModule,
+                sharedPrefModule,
                 cameraDetailsModule,
                 cameraListModule,
                 loginModule,
-                networkModule,
                 recordedClipsListModule
             ))
         }

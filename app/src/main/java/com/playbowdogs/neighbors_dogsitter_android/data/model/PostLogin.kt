@@ -5,8 +5,8 @@ import com.squareup.moshi.Json
 
 @Keep
 data class PostLogin(
-    @Json(name = "username")
-    var username: String = "",
+    @Json(name = "email")
+    var email: String = "",
     @Json(name = "password")
     var password: String = "",
     @Json(name = "androidDeviceToken")

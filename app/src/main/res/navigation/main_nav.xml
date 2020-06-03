@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/cameraListFragment"
         android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraList.CameraListFragment"
-        android:label="MainFragment" >
+        android:label="CameraListFragment">
         <action
             android:id="@+id/action_mainFragment_to_cameraDetails_true"
             app:destination="@id/cameraDetails"
-            app:launchSingleTop="true" >
+            app:launchSingleTop="true">
             <argument
                 android:name="isSingleCam"
                 android:defaultValue="true" />
@@ -22,10 +22,10 @@
             app:destination="@id/cameraDetails"
             app:enterAnim="@anim/fragment_close_enter"
             app:exitAnim="@anim/fragment_close_exit"
-            app:popUpTo="@id/mainFragment"
+            app:launchSingleTop="true"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit"
-            app:launchSingleTop="true" >
+            app:popUpTo="@id/cameraListFragment">
             <argument
                 android:name="isSingleCam"
                 android:defaultValue="false" />
@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/cameraDetails"
-        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraDetails.CameraDetails"
+        android:name="com.playbowdogs.neighbors_dogsitter_android.ui.cameraDetails.CameraDetailsFragment"
         android:label="camera_details_fragment"
         tools:layout="@layout/camera_details_fragment" >
         <action
@@ -49,15 +49,6 @@
             android:name="isSingleCam"
             app:argType="boolean"
             android:defaultValue="true" />
-        <action
-            android:id="@+id/action_cameraDetails_to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/cameraDetails"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:popEnterAnim="@anim/fragment_fade_enter"
-            app:popExitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/recordedClipDetailFragment"
@@ -81,5 +72,14 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.playbowdogs.neighbors_dogsitter_android.ui.login.LoginFragment"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_mainFragment"
+            app:destination="@id/cameraListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:launchSingleTop="true" />
+    </fragment>
 </navigation>

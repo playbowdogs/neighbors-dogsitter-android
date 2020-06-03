@@ -22,12 +22,12 @@ import com.playbowdogs.neighbors_dogsitter_android.utils.Resource
 import com.playbowdogs.neighbors_dogsitter_android.utils.Status
 import org.koin.android.ext.android.inject
 
-class CameraDetails : Fragment() {
+class CameraDetailsFragment : Fragment() {
     private val viewModel: CameraDetailsViewModel by inject()
 
     private lateinit var mBinding: CameraDetailsFragmentBinding
     private val chosenCamera = ChosenCamera.value
-    private val args: CameraDetailsArgs by navArgs()
+    private val args: CameraDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +73,7 @@ class CameraDetails : Fragment() {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
-//                        mBinding.progressViewDetails.visibility = View.VISIBLE
+                        mBinding.progressViewDetails.visibility = View.VISIBLE
                     }
                 }
             }
@@ -91,7 +91,7 @@ class CameraDetails : Fragment() {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                     }
                     Status.LOADING -> {
-//                        mBinding.progressViewDetails.visibility = View.VISIBLE
+                        mBinding.progressViewDetails.visibility = View.VISIBLE
 
                     }
                 }
