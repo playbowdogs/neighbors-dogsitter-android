@@ -6,10 +6,17 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("cameras/")
-    suspend fun getCameras(@Header(value = "Authorization")authorization: String): AccountCamerasModel
+    suspend fun getCameraList(@Header(value = "Authorization") authorization: String
+    ): AccountCamerasModel
 
-    @POST("cameras/{camera_id}/broadcasting/start/")
-    suspend fun startBroadcasting(
+    @GET("cameras/{camera_id}/")
+    suspend fun getCameraStatus(
+        @Header(value = "Authorization") authorization: String,
+        @Path(value = "camera_id", encoded = true) camera_id: String
+    ): AccountCamerasModel.Result
+
+    @GET("cameras/{camera_id}/recording/")
+    suspend fun getRecordingInfo(
         @Header(value = "Authorization") authorization: String,
         @Path(value = "camera_id", encoded = true) camera_id: String
     ): GetRecordingInfoModel

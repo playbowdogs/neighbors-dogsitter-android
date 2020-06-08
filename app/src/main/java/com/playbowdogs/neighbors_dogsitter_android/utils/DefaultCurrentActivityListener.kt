@@ -17,7 +17,7 @@ class DefaultCurrentActivityListener : Application.ActivityLifecycleCallbacks,
     CurrentActivityListener {
     override var currentActivity: Activity? = null
     lateinit var context: Context
-    protected var currentActivityStack: MutableList<Activity> = ArrayList()
+    private var currentActivityStack: MutableList<Activity> = ArrayList()
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
         currentActivity = activity
