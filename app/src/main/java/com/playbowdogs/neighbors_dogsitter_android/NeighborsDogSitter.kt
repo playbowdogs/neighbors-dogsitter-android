@@ -17,6 +17,7 @@ class NeighborsDogSitter : Application() {
             androidContext(this@NeighborsDogSitter)
             modules(listOf(
                 appModule,
+                coroutineScopeModule,
                 networkModule,
                 sharedPrefModule,
                 cameraDetailsModule,

@@ -7,6 +7,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val recordedClipsListModule: Module = module {
-    viewModel { RecordedClipsListViewModel(get()) }
+    viewModel { RecordedClipsListViewModel(get(), get()) }
     single { RecordedClipsListRepository(get()) }
 }

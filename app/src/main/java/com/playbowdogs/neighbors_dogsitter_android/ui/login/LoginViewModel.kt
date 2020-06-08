@@ -3,18 +3,21 @@ package com.playbowdogs.neighbors_dogsitter_android.ui.login
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.playbowdogs.neighbors_dogsitter_android.R
 import com.playbowdogs.neighbors_dogsitter_android.data.formState.LoginFormState
 import com.playbowdogs.neighbors_dogsitter_android.data.model.LoggedInUserModel
 import com.playbowdogs.neighbors_dogsitter_android.data.model.PostLogin
 import com.playbowdogs.neighbors_dogsitter_android.data.repository.LoginRepository
+import com.playbowdogs.neighbors_dogsitter_android.utils.BaseViewModel
 import com.playbowdogs.neighbors_dogsitter_android.utils.Resource
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class LoginViewModel(private val repo: LoginRepository) : ViewModel() {
+class LoginViewModel(private val repo: LoginRepository,
+                     scope: CoroutineScope
+) : BaseViewModel(scope) {
     val sharedPrefAuthToken: MutableLiveData<String> = MutableLiveData()
     val loginFormState: MutableLiveData<LoginFormState> = MutableLiveData()
 
@@ -24,7 +27,7 @@ class LoginViewModel(private val repo: LoginRepository) : ViewModel() {
 
     val userModel: MutableLiveData<Resource<LoggedInUserModel>> = MutableLiveData()
 
-    fun postLogin() = GlobalScope.launch(Dispatchers.IO) {
+    fun postLogin() = scope.launch {
         val postLogin = PostLogin(
             email = email.value.toString(),
             password = password.value.toString(),
@@ -40,9 +43,9 @@ class LoginViewModel(private val repo: LoginRepository) : ViewModel() {
         }
     }
 
-    fun checkAuthToken() = GlobalScope.launch(Dispatchers.IO) {
-        if (repo.checkAuthToken() != "") {
-            sharedPrefAuthToken.postValue(repo.checkAuthToken())
+    fun checkAuthToken() = scope.launch {
+        if (repo.returnAuthToken() != "") {
+            sharedPrefAuthToken.postValue(repo.returnAuthToken())
         } else { Log.e("User", "No user!") }
     }
 

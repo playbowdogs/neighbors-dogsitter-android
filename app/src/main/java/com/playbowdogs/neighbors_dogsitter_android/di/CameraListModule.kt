@@ -7,6 +7,6 @@ import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val cameraListModule: Module = module {
-    viewModel { CameraListViewModel(get()) }
+    viewModel { CameraListViewModel(get(), get()) }
     single { CameraListRepository(get()) }
 }

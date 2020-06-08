@@ -1,18 +1,19 @@
 package com.playbowdogs.neighbors_dogsitter_android.ui.cameraDetails
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.Headers
 import com.playbowdogs.neighbors_dogsitter_android.data.model.AccountCamerasModel
 import com.playbowdogs.neighbors_dogsitter_android.data.model.ChosenCamera
 import com.playbowdogs.neighbors_dogsitter_android.data.model.GetRecordingInfoModel
 import com.playbowdogs.neighbors_dogsitter_android.data.repository.CameraDetailsRepository
+import com.playbowdogs.neighbors_dogsitter_android.utils.BaseViewModel
 import com.playbowdogs.neighbors_dogsitter_android.utils.Resource
 import kotlinx.coroutines.*
 
-class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewModel() {
-
+class CameraDetailsViewModel(private val repo: CameraDetailsRepository,
+                             scope: CoroutineScope
+) : BaseViewModel(scope) {
     val cameraStatus = MutableLiveData<Resource<AccountCamerasModel.Result>>()
     val cameraRecordingInfo = MutableLiveData<Resource<GetRecordingInfoModel>>()
     private val cameraID = ChosenCamera.value?.id.toString()
@@ -22,7 +23,7 @@ class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewMo
         getRecordingInfo()
     }
 
-    private fun getCameraStatus() = GlobalScope.launch(Dispatchers.IO) {
+    private fun getCameraStatus() = scope.launch {
         cameraStatus.postValue(Resource.loading(data = null))
         try {
             cameraStatus.postValue(
@@ -34,7 +35,7 @@ class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewMo
         }
     }
 
-    fun getRecordingInfo() = GlobalScope.launch(Dispatchers.IO) {
+    fun getRecordingInfo() = scope.launch {
         cameraRecordingInfo.postValue(Resource.loading(data = null))
         try {
             cameraRecordingInfo.postValue(
@@ -46,7 +47,7 @@ class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewMo
         }
     }
 
-    fun startRecording() = GlobalScope.launch(Dispatchers.IO) {
+    fun startRecording() = scope.launch {
         cameraRecordingInfo.postValue(Resource.loading(data = null))
 
         val task = GlobalScope.async {
@@ -63,7 +64,7 @@ class CameraDetailsViewModel(private val repo: CameraDetailsRepository) : ViewMo
         getRecordingInfo()
     }
 
-    fun stopRecording() = GlobalScope.launch(Dispatchers.IO) {
+    fun stopRecording() = scope.launch {
         cameraRecordingInfo.postValue(Resource.loading(data = null))
 
         val task = GlobalScope.async {
