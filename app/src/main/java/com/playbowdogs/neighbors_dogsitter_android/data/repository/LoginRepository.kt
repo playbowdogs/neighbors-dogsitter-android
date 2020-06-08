@@ -13,17 +13,18 @@ class LoginRepository(
 ) {
     suspend fun getLogin(postLogin: PostLogin) = apiService.getLogin(postLogin)
 
-    suspend fun checkAuthToken() : String {
+    suspend fun returnAuthToken() : String {
         return withContext(Dispatchers.IO) {
             return@withContext sharedPreferences.getString("authToken", "") ?: ""
         }
     }
 
-    suspend fun saveAuthToken(authToken: String) {
+    suspend fun saveAuthToken(authToken: String) : String {
         withContext(Dispatchers.IO) {
             sharedPreferencesEditor
                 .putString("authToken", authToken)
                 .commit()
         }
+        return returnAuthToken()
     }
 }
